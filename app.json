@@ -2,6 +2,7 @@
   "expo": {
     "name": "Uber Clone",
     "slug": "uber-clone",
+    "newArchEnabled": true,
     "version": "1.0.0",
     "scheme": "uber-clone",
     "web": {
