@@ -3,6 +3,7 @@ import { Link } from 'expo-router';
 import { Image, ScrollView, Text, View } from 'react-native';
 import CustomButton from '~/components/customButton';
 import InputField from '~/components/inputField';
+import OAuth from '~/components/oauth';
 import { icons, images } from '~/constants';
 
 const SignUp = () => {
@@ -55,6 +56,7 @@ const SignUp = () => {
             }}
           />
           <CustomButton className="mt-6" title="Sign Up" onPress={onSignUpPress} />
+          <OAuth />
           <Link
             className="mt-10 flex flex-row text-center text-lg text-general-200"
             href="/sign-in">
