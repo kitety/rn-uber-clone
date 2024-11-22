@@ -6,6 +6,7 @@ const Layout = () => {
       <Tabs.Screen name="home" />
       <Tabs.Screen name="chat" />
       <Tabs.Screen name="profile" />
+      <Tabs.Screen name="rides" />
     </Tabs>
   );
 };

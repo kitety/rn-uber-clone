@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 
 const Home = () => {
   const { user } = useUser();
+  // console.log('user', user);
 
   return (
     <View>

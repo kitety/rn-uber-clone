@@ -1,5 +1,7 @@
+import { useSignIn } from '@clerk/clerk-expo';
 import { useReactive } from 'ahooks';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
 import CustomButton from '~/components/customButton';
 import InputField from '~/components/inputField';
@@ -7,14 +9,36 @@ import OAuth from '~/components/oauth';
 import { icons, images } from '~/constants';
 
 const SignIn = () => {
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const router = useRouter();
   const state = useReactive({
     email: '',
     password: '',
   });
 
-  const onSignInPress = () => {
-    console.log('state', state);
-  };
+  const onSignInPress = useCallback(async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: state.email,
+        password: state.password,
+      });
+
+      if (signInAttempt.status === 'complete') {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace('/');
+      } else {
+        // See https://clerk.com/docs/custom-flows/error-handling
+        // for more info on error handling
+        console.error(JSON.stringify(signInAttempt, null, 2));
+      }
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
+    }
+  }, [isLoaded, router, setActive, signIn, state.email, state.password]);
 
   return (
     <ScrollView className="flex-1 bg-white">
