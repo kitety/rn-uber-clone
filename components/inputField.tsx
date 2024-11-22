@@ -24,7 +24,6 @@ const InputField: FC<IInputFieldProps> = ({
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  console.log('isFocused', isFocused);
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

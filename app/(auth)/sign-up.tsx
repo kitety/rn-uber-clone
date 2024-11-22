@@ -1,7 +1,8 @@
 import { useSignUp } from '@clerk/clerk-expo';
 import { useReactive } from 'ahooks';
+import { clsx } from 'clsx';
 import { Link, useRouter } from 'expo-router';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Alert, Image, ScrollView, Text, View } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 import CustomButton from '~/components/customButton';
 import InputField from '~/components/inputField';
@@ -16,7 +17,7 @@ const SignUp = () => {
     email: '',
     password: '',
     code: '',
-    state: 'success',
+    status: 'default',
     error: '',
   });
 
@@ -32,17 +33,16 @@ const SignUp = () => {
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
-
-      state.state = 'pending';
+      state.status = 'pending';
     } catch (err: any) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      Alert.alert('Error', err.errors[0].longMessage);
     }
   };
 
   const onPressVerify = async () => {
     if (!isLoaded) return;
+    // reset error
+    state.error = '';
 
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
@@ -52,14 +52,12 @@ const SignUp = () => {
       if (completeSignUp.status === 'complete') {
         // todo create a database user
         await setActive({ session: completeSignUp.createdSessionId });
-        state.state = 'success';
+        state.status = 'success';
       } else {
-        state.state = 'failed';
         state.error = 'Verification Failed';
       }
     } catch (err: any) {
-      state.error = err.errors[0].longMessage;
-      state.state = 'failed';
+      state.error = err?.errors[0]?.longMessage || 'Verification Failed';
     }
   };
 
@@ -110,10 +108,56 @@ const SignUp = () => {
             <Text className="text-primary-500">Sign In</Text>
           </Link>
         </View>
+
         {/* verification code */}
-        <ReactNativeModal isVisible={state.state === 'success'}>
-          <View className="min-h-[300px] rounded-2xl bg-white px-7 py-9">
+        <ReactNativeModal isVisible={['pending', 'success'].includes(state.status)}>
+          {/* pending */}
+          <View
+            className={clsx(
+              'min-h-[300px] rounded-2xl bg-white px-7 py-9',
+              state.status !== 'pending' && 'hidden'
+            )}>
+            <Text className="mb-2 font-JakartaExtraBold text-2xl">Verification</Text>
+            <Text className="mb-5 font-Jakarta">
+              We've sent you a verification code to {state.email}
+            </Text>
+            <InputField
+              icon={icons.lock}
+              keyboardType="numeric"
+              label="Code"
+              placeholder="123456"
+              value={state.code}
+              onChangeText={(text) => {
+                // reset error
+                if (state.error) {
+                  state.error = '';
+                }
+                state.code = text;
+              }}
+            />
+            {state.error && <Text className="mt-1 text-sm text-red-500">{state.error}</Text>}
+            <CustomButton
+              className="mt-5 bg-success-500"
+              title="Verify Email"
+              onPress={onPressVerify}
+            />
+          </View>
+          {/* success */}
+          <View
+            className={clsx(
+              'min-h-[300px] rounded-2xl bg-white px-7 py-9',
+              state.status !== 'success' && 'hidden'
+            )}>
             <Image className="mx-auto my-5 h-[110px] w-[110px]" source={images.check} />
+            <Text className="text-center font-JakartaBold text-3xl">Verified</Text>
+            <Text className="mt-2 text-center font-Jakarta text-base text-gray-400">
+              You have successfully verified your account
+            </Text>
+            <CustomButton
+              className="mt-5"
+              title="Browse Home"
+              onPress={() => router.replace('/(root)/(tabs)/home')}
+            />
           </View>
         </ReactNativeModal>
       </View>
