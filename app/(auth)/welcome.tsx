@@ -42,7 +42,7 @@ const Welcome = () => {
         ))}
       </Swiper>
       <CustomButton
-        className="mt-10 w-11/12"
+        className="mt-10 !w-11/12"
         title={isLastSlide ? 'Get Started' : 'Next'}
         onPress={() => {
           if (isLastSlide) {
