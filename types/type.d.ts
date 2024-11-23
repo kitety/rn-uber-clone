@@ -36,10 +36,10 @@ declare interface IMapProps {
 declare interface IRide {
   origin_address: string;
   destination_address: string;
-  origin_latitude: number;
-  origin_longitude: number;
-  destination_latitude: number;
-  destination_longitude: number;
+  origin_latitude: number | stirng;
+  origin_longitude: number | string;
+  destination_latitude: number | string;
+  destination_longitude: number | string;
   ride_time: number;
   fare_price: number;
   payment_status: string;
