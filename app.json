@@ -17,7 +17,13 @@
           "origin": "https://uber.dev/"
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Uber to use your location."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
