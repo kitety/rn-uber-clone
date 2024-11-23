@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { icons } from '~/constants';
 import { IGoogleInputProps } from '~/types/type';
 
 const GoogleTextInput: FC<IGoogleInputProps> = ({
@@ -17,7 +19,7 @@ const GoogleTextInput: FC<IGoogleInputProps> = ({
         'relative z-50 mb-5 flex-row items-center justify-center rounded-xl',
         containerStyle
       )}>
-      {/* <GooglePlacesAutocomplete
+      <GooglePlacesAutocomplete
         fetchDetails
         debounce={200}
         placeholder="Where you wanna go?"
@@ -69,7 +71,7 @@ const GoogleTextInput: FC<IGoogleInputProps> = ({
             address: data.description,
           });
         }}
-      /> */}
+      />
     </View>
   );
 };
