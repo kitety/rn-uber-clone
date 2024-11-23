@@ -8,6 +8,7 @@ import CustomButton from '~/components/customButton';
 import InputField from '~/components/inputField';
 import OAuth from '~/components/oauth';
 import { icons, images } from '~/constants';
+import { fetchAPI } from '~/lib/fetch';
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -51,6 +52,14 @@ const SignUp = () => {
 
       if (completeSignUp.status === 'complete') {
         // todo create a database user
+        await fetchAPI('/(api)/user', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: state.name,
+            email: state.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
         await setActive({ session: completeSignUp.createdSessionId });
         state.status = 'success';
       } else {

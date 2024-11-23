@@ -7,11 +7,16 @@
     "scheme": "uber-clone",
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/icon.png"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "origin": "https://uber.dev/"
+        }
+      ],
       "expo-font"
     ],
     "experiments": {
