@@ -2,6 +2,8 @@ import { useUser } from '@clerk/clerk-expo';
 import { useReactive } from 'ahooks';
 import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import GoogleTextInput from '~/components/googleTextInput';
+import Map from '~/components/map';
 import RideCard from '~/components/rideCard';
 import { icons, images } from '~/constants';
 
@@ -116,6 +118,9 @@ const Home = () => {
   const handleLogout = () => {
     // signOut();
   };
+  const handleDestinationPress = () => {
+    console.log('destination pressed');
+  };
 
   return (
     <SafeAreaView className="bg-general-500">
@@ -150,6 +155,18 @@ const Home = () => {
               </TouchableOpacity>
             </View>
             {/* google TextInput */}
+            <GoogleTextInput
+              containerStyle="bg-white shadow-md  shadow-neutral-300"
+              handlePress={handleDestinationPress}
+              icon={icons.search}
+            />
+            <>
+              <Text className="mb-3 mt-5 font-JakartaBold text-xl">Your Current Location</Text>
+              <View className="h-[300px] flex-row items-center bg-transparent">
+                <Map />
+              </View>
+              <Text className="mb-3 mt-5 font-JakartaBold text-xl">Recent Rides</Text>
+            </>
           </>
         )}
       />
