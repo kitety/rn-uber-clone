@@ -28,7 +28,7 @@ declare interface IMarkerData {
 declare interface IMapProps {
   destinationLatitude?: number;
   destinationLongitude?: number;
-  onDriverTimesCalculated?: (driversWithTimes: MarkerData[]) => void;
+  onDriverTimesCalculated?: (driversWithTimes: IMarkerData[]) => void;
   selectedDriver?: number | null;
   onMapReady?: () => void;
 }
@@ -36,10 +36,10 @@ declare interface IMapProps {
 declare interface IRide {
   origin_address: string;
   destination_address: string;
-  origin_latitude: number | stirng;
-  origin_longitude: number | string;
-  destination_latitude: number | string;
-  destination_longitude: number | string;
+  origin_latitude: number;
+  origin_longitude: number;
+  destination_latitude: number;
+  destination_longitude: number;
   ride_time: number;
   fare_price: number;
   payment_status: string;
@@ -117,15 +117,15 @@ declare interface ILocationStore {
 }
 
 declare interface IDriverStore {
-  drivers: IMarkerData[];
+  drivers: MarkerData[];
   selectedDriver: number | null;
   setSelectedDriver: (driverId: number) => void;
-  setDrivers: (drivers: IMarkerData[]) => void;
+  setDrivers: (drivers: MarkerData[]) => void;
   clearSelectedDriver: () => void;
 }
 
 declare interface IDriverCardProps {
-  item: IRide;
+  item: MarkerData;
   selected: number;
   setSelected: () => void;
 }
