@@ -1,6 +1,7 @@
 import { useUser } from '@clerk/clerk-expo';
 import { useMount, useReactive } from 'ahooks';
 import * as Location from 'expo-location';
+import { router } from 'expo-router';
 import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import GoogleTextInput from '~/components/googleTextInput';
@@ -9,7 +10,7 @@ import RideCard from '~/components/rideCard';
 import { icons, images } from '~/constants';
 import { useLocationStore } from '~/store';
 
-const recentRides = [
+export const recentRides = [
   {
     ride_id: '1',
     origin_address: 'Kathmandu, Nepal',
@@ -124,6 +125,7 @@ const Home = () => {
   };
   const handleDestinationPress = () => {
     console.log('destination pressed');
+    router.push('/(root)/find-ride');
   };
   useMount(() => {
     const requestLocation = async () => {

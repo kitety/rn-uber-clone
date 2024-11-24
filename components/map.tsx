@@ -6,7 +6,7 @@ import { calculateRegion, generateMarkersFromData } from '~/lib/map';
 import { useDriverStore, useLocationStore } from '~/store';
 import { IDriver, IMarkerData } from '~/types/type';
 
-const drivers = [
+export const drivers = [
   {
     id: '1',
     first_name: 'James',

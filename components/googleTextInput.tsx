@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { Image, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { icons } from '~/constants';
 import { IGoogleInputProps } from '~/types/type';
@@ -14,11 +14,14 @@ const GoogleTextInput: FC<IGoogleInputProps> = ({
 }) => {
   const key = process.env.EXPO_PUBLIC_GOOGLE_API_KEY!;
   return (
-    <View
+    <Pressable
       className={clsx(
         'relative z-50 mb-5 flex-row items-center justify-center rounded-xl',
         containerStyle
-      )}>
+      )}
+      onPress={() => {
+        handlePress();
+      }}>
       <GooglePlacesAutocomplete
         fetchDetails
         debounce={200}
@@ -65,14 +68,14 @@ const GoogleTextInput: FC<IGoogleInputProps> = ({
         }}
         onPress={(data, details) => {
           console.log(data, details);
-          handlePress({
-            latitude: details?.geometry?.location?.lat!,
-            longitude: details?.geometry?.location?.lng!,
-            address: data.description,
-          });
+          // handlePress({
+          //   latitude: details?.geometry?.location?.lat!,
+          //   longitude: details?.geometry?.location?.lng!,
+          //   address: data.description,
+          // });
         }}
       />
-    </View>
+    </Pressable>
   );
 };
 

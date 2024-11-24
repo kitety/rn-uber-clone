@@ -67,15 +67,7 @@ declare interface IGoogleInputProps {
   initialLocation?: string;
   containerStyle?: string;
   textInputBackgroundColor?: string;
-  handlePress: ({
-    latitude,
-    longitude,
-    address,
-  }: {
-    latitude: number;
-    longitude: number;
-    address: string;
-  }) => void;
+  handlePress: () => void;
 }
 
 declare interface IInputFieldProps extends TextInputProps {
@@ -125,15 +117,15 @@ declare interface ILocationStore {
 }
 
 declare interface IDriverStore {
-  drivers: MarkerData[];
+  drivers: IMarkerData[];
   selectedDriver: number | null;
   setSelectedDriver: (driverId: number) => void;
-  setDrivers: (drivers: MarkerData[]) => void;
+  setDrivers: (drivers: IMarkerData[]) => void;
   clearSelectedDriver: () => void;
 }
 
 declare interface IDriverCardProps {
-  item: MarkerData;
+  item: IRide;
   selected: number;
   setSelected: () => void;
 }
